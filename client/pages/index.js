@@ -9,7 +9,6 @@ class Index extends Component {
 
   static async getInitialProps() {
     const contract = await getContract(web3, contractDefinition);
-    const accounts = await web3.eth.getAccounts();
     const name = await contract.name();
     const symbol = await contract.symbol();
     const totalSupply = await contract.totalSupply();
