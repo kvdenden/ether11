@@ -2,7 +2,8 @@ version: '3.3'
 
 # Configure a mode_modules volume so that we can cache the node_modules so we don't have to install them on each rebuild.
 volumes:
-  node_modules:
+  client_node_modules:
+  truffle_node_modules:
 
 # Configure the network strategy for linking your containers.
 networks:
@@ -13,20 +14,37 @@ networks:
 services:
   # Configure the app container for local development
   client:
-    image: node:9
+    depends_on:
+      - ganache
+    build: client
     networks:
       - app_network
-    working_dir: /app
-    # Mount the app folder so that we code changes are reflected without a rebuild. Attach gem cache.
     volumes:
-      - node_modules:/app/node_modules
+      - client_node_modules:/app/node_modules
       - ./ethereum/build/contracts:/app/lib/contracts
       - ./client:/app
     ports:
       - 3000:3000
     environment:
-      # Environment vars using ${} vars inherit their values from .env file, the variables with no value inherit from users environment.
-      AWS_DEFAULT_REGION:
-      AWS_SECRET_ACCESS_KEY:
-      AWS_ACCESS_KEY_ID:
-    command: /bin/bash -c "yarn && yarn dev"
+      PROVIDER_URI: http://ganache:8545
+    command: "yarn dev"
+  truffle:
+    build: ethereum
+    networks:
+      - app_network
+    volumes:
+      - truffle_node_modules:/app/node_modules
+      - ./ethereum:/app
+    environment:
+      RPC_HOST: ganache
+      HDWALLET_MNEMONIC:
+      INFURA_ACCESS_TOKEN:
+  ganache:
+    image: trufflesuite/ganache-cli
+    networks:
+      - app_network
+    ports:
+      - 8545:8545
+    environment:
+      HDWALLET_MNEMONIC:
+    command: "-m ${HDWALLET_MNEMONIC}"
