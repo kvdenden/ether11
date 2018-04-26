@@ -1,5 +1,5 @@
-const Card = artifacts.require('./Card.sol')
+const Cards = artifacts.require('./Cards.sol')
 
 module.exports = function (deployer) {
-  deployer.deploy(Card);
+  deployer.deploy(Cards);
 }

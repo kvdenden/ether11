@@ -1,6 +1,8 @@
-export default ({ tokenId }) => {
-  console.log(tokenId)
+export default ({ name, tokenId }) => {
   return (
-  <div>{tokenId}</div>
-);
+    <div>
+      <h3>{name}</h3>
+      <p>Token #{tokenId}</p>
+    </div>
+  );
 }

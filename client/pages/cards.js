@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import web3 from '../lib/web3';
 import getInjectedWeb3 from '../lib/injectedWeb3';
 import getContract from '../lib/getContract'
-import contractDefinition from '../lib/contracts/Card.json'
+import contractDefinition from '../lib/contracts/Cards.json'
 import Page from '../layouts/main'
 import CardCollection from '../components/CardCollection'
+import getCardInfo from '../lib/getCardInfo'
 
 class Cards extends Component {
   state = { balance: 0, cards: [] }
 
   async componentDidMount() {
     const contract = await getContract(web3, contractDefinition);
-    console.log(await web3.eth.net.getId());
 
     try {
       const injectedWeb3 = await getInjectedWeb3();
@@ -20,15 +20,22 @@ class Cards extends Component {
       const currentAccount = accounts[0];
 
       const balance = await contract.balanceOf(currentAccount).then(parseInt);
-      const tokenIds = await Promise.all(
-        Array(parseInt(balance))
+
+      const cards = await Promise.all(
+        Array(balance)
           .fill()
-          .map((_element, index) => {
-            return contract.tokenOfOwnerByIndex(currentAccount, index);
-          })
-      );
-      console.log(tokenIds);
-      const cards = tokenIds.map(tokenId => ({ tokenId: parseInt(tokenId) }));
+          .map((_element, index) =>
+            contract.tokenOfOwnerByIndex(currentAccount, index)
+            .then(parseInt)
+            .then(tokenId => Promise.all([tokenId, contract.getCard(tokenId).then(parseInt)]))
+            .then(([tokenId, cardId]) => {
+              return {
+                tokenId,
+                cardId,
+                ...getCardInfo(parseInt(cardId))
+              };
+            })));
+
       this.setState({ currentAccount, balance, cards });
     } catch (error) {
       console.log(error);

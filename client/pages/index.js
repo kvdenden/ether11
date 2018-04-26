@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import web3 from '../lib/web3';
 import getContract from '../lib/getContract'
-import contractDefinition from '../lib/contracts/Card.json'
+import contractDefinition from '../lib/contracts/Cards.json'
 import Link from 'next/link'
 import Page from '../layouts/main'
 
