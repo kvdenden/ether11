@@ -3,12 +3,12 @@ import { Form, Button, Message, Input } from 'semantic-ui-react';
 import web3 from '../lib/web3';
 import getInjectedWeb3 from '../lib/injectedWeb3';
 import getContract from '../lib/getContract'
-import contractDefinition from '../lib/contracts/Card.json'
+import contractDefinition from '../lib/contracts/Cards.json'
 import Link from 'next/link'
 import Page from '../layouts/main'
 
 class Admin extends Component {
-  state = { currentAccount: undefined, isAdmin: false, address: '', tokenId: '' }
+  state = { currentAccount: undefined, isAdmin: false, address: '', cardId: '' }
 
   async componentDidMount() {
     const contract = await getContract(web3, contractDefinition);
@@ -20,28 +20,22 @@ class Admin extends Component {
 
       const owner = await contract.owner().then(web3.utils.toChecksumAddress);
       const isAdmin = owner === currentAccount
-      console.log(owner)
-      console.log(currentAccount)
-      console.log("isAdmin", isAdmin)
-
       this.setState({ currentAccount, isAdmin });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }
 
   onMint = async event => {
     event.preventDefault();
 
-    const { currentAccount, address, tokenId } = this.state;
+    const { currentAccount, address, cardId } = this.state;
     try {
       const injectedWeb3 = await getInjectedWeb3();
       const contract = await getContract(injectedWeb3, contractDefinition);
-      console.log("waiting to mint")
-      await contract.mint(address, tokenId, {from: currentAccount});
-      console.log("done minting")
-    } catch (err) {
-      console.log(err.message);
+      await contract.mint(address, cardId, {from: currentAccount});
+    } catch (error) {
+      console.log(error.message);
     }
   }
 
@@ -64,10 +58,10 @@ class Admin extends Component {
             />
           </Form.Field>
           <Form.Field>
-            <label>Token id</label>
+            <label>Card id</label>
             <Input
-              value={this.state.tokenId}
-              onChange={event => this.setState({ tokenId: event.target.value })}
+              value={this.state.cardId}
+              onChange={event => this.setState({ cardId: event.target.value })}
             />
           </Form.Field>
           <Button primary>

@@ -1,0 +1,170 @@
+[
+  {
+    "cardId": 1,
+    "name": "Ederson",
+    "position": "Goalkeeper",
+    "country": "Brazil"
+  },
+  {
+    "cardId": 2,
+    "name": "Bernardo Silva",
+    "position": "Midfielder",
+    "country": "Portugal"
+  },
+  {
+    "cardId": 3,
+    "name": "Claudio Bravo",
+    "position": "Goalkeeper",
+    "country": "Chile"
+  },
+  {
+    "cardId": 4,
+    "name": "Vincent Kompany",
+    "position": "Defender",
+    "country": "Belgium"
+  },
+  {
+    "cardId": 5,
+    "name": "John Stones",
+    "position": "Defender",
+    "country": "England"
+  },
+  {
+    "cardId": 6,
+    "name": "Nicolás Otamendi",
+    "position": "Defender",
+    "country": "Argentina"
+  },
+  {
+    "cardId": 7,
+    "name": "Tosin Adarabioyo",
+    "position": "Defender",
+    "country": "England"
+  },
+  {
+    "cardId": 8,
+    "name": "Ilkay Gündogan",
+    "position": "Midfielder",
+    "country": "Germany"
+  },
+  {
+    "cardId": 9,
+    "name": "Kevin De Bruyne",
+    "position": "Midfielder",
+    "country": "Belgium"
+  },
+  {
+    "cardId": 10,
+    "name": "Fabian Delph",
+    "position": "Midfielder",
+    "country": "England"
+  },
+  {
+    "cardId": 11,
+    "name": "Leroy Sané",
+    "position": "Midfielder",
+    "country": "Germany"
+  },
+  {
+    "cardId": 12,
+    "name": "David Silva",
+    "position": "Midfielder",
+    "country": "Spain"
+  },
+  {
+    "cardId": 13,
+    "name": "Fernandinho",
+    "position": "Midfielder",
+    "country": "Brazil"
+  },
+  {
+    "cardId": 14,
+    "name": "Oleksandr Zinchenko",
+    "position": "Midfielder",
+    "country": "Ukraine"
+  },
+  {
+    "cardId": 15,
+    "name": "Yaya Touré",
+    "position": "Midfielder",
+    "country": "Cote D'Ivoire"
+  },
+  {
+    "cardId": 16,
+    "name": "Brahim Diaz",
+    "position": "Midfielder",
+    "country": "Spain"
+  },
+  {
+    "cardId": 17,
+    "name": "Raheem Sterling",
+    "position": "Forward",
+    "country": "England"
+  },
+  {
+    "cardId": 18,
+    "name": "Sergio Agüero",
+    "position": "Forward",
+    "country": "Argentina"
+  },
+  {
+    "cardId": 19,
+    "name": "Gabriel Jesus",
+    "position": "Forward",
+    "country": "Brazil"
+  },
+  {
+    "cardId": 20,
+    "name": "Phil Foden",
+    "position": "Forward",
+    "country": "England"
+  },
+  {
+    "cardId": 21,
+    "name": "Kyle Walker",
+    "position": "Defender",
+    "country": "England"
+  },
+  {
+    "cardId": 22,
+    "name": "Danilo",
+    "position": "Defender",
+    "country": "Brazil"
+  },
+  {
+    "cardId": 23,
+    "name": "Benjamin Mendy",
+    "position": "Defender",
+    "country": "France"
+  },
+  {
+    "cardId": 24,
+    "name": "Lukas Nmecha",
+    "position": "Forward",
+    "country": "England"
+  },
+  {
+    "cardId": 25,
+    "name": "Tom Dele-Bashiru",
+    "position": "Midfielder",
+    "country": "England"
+  },
+  {
+    "cardId": 26,
+    "name": "Aymeric Laporte",
+    "position": "Defender",
+    "country": "France"
+  },
+  {
+    "cardId": 27,
+    "name": "Daniel Grimshaw",
+    "position": "Goalkeeper",
+    "country": "England"
+  },
+  {
+    "cardId": 28,
+    "name": "Demeaco Duhaney",
+    "position": "Defender",
+    "country": "England"
+  }
+]
