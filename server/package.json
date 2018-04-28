@@ -1,0 +1,23 @@
+{
+  "name": "ether11-server",
+  "version": "0.1.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.js --exec babel-node",
+    "build": "babel src/ -d build",
+    "start": "node build/index.js",
+    "link-contracts": "cd lib && ln -s ../../ethereum/build/contracts contracts"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.12.1",
+    "merge-graphql-schemas": "^1.5.1",
+    "truffle-contract": "^3.0.4",
+    "web3": "^1.0.0-beta.34"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "nodemon": "^1.17.3"
+  }
+}
