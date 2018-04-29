@@ -1,42 +1,33 @@
 import React, { Component } from 'react';
-import web3 from '../lib/web3';
+import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
 import getInjectedWeb3 from '../lib/injectedWeb3';
-import getContract from '../lib/getContract'
-import contractDefinition from '../lib/contracts/Cards.json'
 import Page from '../layouts/main'
+import withData from '../lib/apollo'
 import CardCollection from '../components/CardCollection'
-import getCardInfo from '../lib/getCardInfo'
+
+const getTokens = gql`
+  query getTokens($owner: Address!) {
+    cardContract {
+      balance: balanceOf(owner: $owner)
+      tokens: tokensOf(owner: $owner) {
+        tokenId
+        ...CardCollectionFragment
+      }
+    }
+  }
+  ${CardCollection.fragments.entry}
+`;
 
 class Cards extends Component {
-  state = { balance: 0, cards: [] }
-
+  state = { currentAccount: null }
   async componentDidMount() {
-    const contract = await getContract(web3, contractDefinition);
-
     try {
       const injectedWeb3 = await getInjectedWeb3();
       const accounts = await injectedWeb3.eth.getAccounts();
-
       const currentAccount = accounts[0];
 
-      const balance = await contract.balanceOf(currentAccount).then(parseInt);
-
-      const cards = await Promise.all(
-        Array(balance)
-          .fill()
-          .map((_element, index) =>
-            contract.tokenOfOwnerByIndex(currentAccount, index)
-            .then(parseInt)
-            .then(tokenId => Promise.all([tokenId, contract.getCard(tokenId).then(parseInt)]))
-            .then(([tokenId, cardId]) => {
-              return {
-                tokenId,
-                cardId,
-                ...getCardInfo(parseInt(cardId))
-              };
-            })));
-
-      this.setState({ currentAccount, balance, cards });
+      this.setState({ currentAccount });
     } catch (error) {
       console.log(error);
     }
@@ -47,11 +38,29 @@ class Cards extends Component {
     return (
       <Page>
         <h1>Cards</h1>
-        <p>You have {this.state.balance} cards</p>
-        <CardCollection cards={this.state.cards} />
+        <Query query={getTokens} variables={{ owner: this.state.currentAccount }} skip={!this.state.currentAccount}>
+          {({ loading, error, data }) => {
+            if (loading) {
+              return <p>Loading...</p>;
+            }
+            if (error) {
+              return <p>Error {error.message}</p>
+            }
+
+            console.log(data);
+
+            return (
+              <div>
+                <p>You have {data.cardContract.balance} cards.</p>
+                <CardCollection tokens={data.cardContract.tokens} />
+              </div>
+            );
+          }}
+
+        </Query>
       </Page>
     );
   }
 }
 
-export default Cards;
+export default withData(Cards);

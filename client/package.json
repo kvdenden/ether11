@@ -10,7 +10,11 @@
     "link-contracts": "cd lib && ln -s ../../ethereum/build/contracts contracts"
   },
   "dependencies": {
+    "apollo-boost": "^0.1.4",
+    "graphql": "^0.13.2",
+    "lodash": "^4.17.10",
     "next": "^5.1.0",
+    "next-apollo": "^1.0.13",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "semantic-ui-react": "^0.79.1",

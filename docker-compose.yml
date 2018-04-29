@@ -28,6 +28,7 @@ services:
       - 3000:3000
     environment:
       PROVIDER_URI: http://ganache:8545
+      GRAPHQL_SERVER_URI: http://server:4000
     command: "yarn dev"
   server:
     depends_on:
