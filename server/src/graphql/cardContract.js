@@ -11,7 +11,7 @@ const typeDefs = `
   interface ERC721Contract {
     totalSupply: Int!
     balanceOf(owner: Address!): Int!
-    tokens(owner: Address!): [ERC721Token!]!
+    tokensOf(owner: Address!): [ERC721Token!]!
   }
 
   type Card {
@@ -20,14 +20,15 @@ const typeDefs = `
 
   type CardToken implements ERC721Token {
     tokenId: Int!
-    owner: Address
+    owner: Address!
     card: Card!
   }
 
   type CardContract implements ERC721Contract {
     totalSupply: Int!
     balanceOf(owner: Address!): Int!
-    tokens(owner: Address!): [CardToken!]!
+    tokensOf(owner: Address!): [CardToken!]!
+    token(id: Int!): CardToken
   }
 
   type Query {
@@ -59,13 +60,19 @@ const resolvers = {
     balanceOf: async (contract, { owner }) => {
       return await contract.balanceOf(owner);
     },
-    tokens: async (contract, { owner }) => {
-      const balance = await contract.balanceOf(owner);
+    tokensOf: async (contract, { owner }) => {
+      const balance = await contract.balanceOf(owner).then(parseInt);
 
       const tokens = await Promise.all(
-        Array(balance).fill().map((_element, index) => contract.tokenOfOwnerByIndex(owner, index))
+        Array(balance).fill().map((_element, index) => contract.tokenOfOwnerByIndex(owner, index).then(parseInt))
       );
       return tokens.map((tokenId) => ({ tokenId, contract }));
+    },
+    token: async (contract, { id }) => {
+      const tokenExists = await contract.exists(id);
+      if (tokenExists) {
+        return { tokenId: id, contract };
+      }
     }
   },
   CardToken: {
