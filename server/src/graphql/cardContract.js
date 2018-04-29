@@ -14,6 +14,10 @@ const typeDefs = `
     tokens(owner: Address!): [ERC721Token!]!
   }
 
+  type Card {
+    cardId: Int!
+  }
+
   type CardToken implements ERC721Token {
     tokenId: Int!
     owner: Address
@@ -69,7 +73,7 @@ const resolvers = {
       return await contract.ownerOf(tokenId);
     },
     card: async ({ tokenId, contract }) => {
-      const cardId = await contract.getCard(tokenId);
+      const cardId = await contract.getCard(tokenId).then(parseInt);
       return { cardId };
     }
   }

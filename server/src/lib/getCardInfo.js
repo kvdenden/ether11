@@ -1,4 +1,4 @@
-import cards from '../data/cards.json'
+import cards from '../../data/cards.json'
 
 const cardsMap = new Map(cards.map(card => [card.cardId, card]));
 

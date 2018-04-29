@@ -1,15 +1,15 @@
 import { mergeTypes, mergeResolvers } from "merge-graphql-schemas";
 import { typeDefs as cardContractTypeDefs, resolvers as cardContractResolvers } from './cardContract';
-import { typeDefs as cardTypeDefs, resolvers as cardResolvers } from './card';
+import { typeDefs as cardInfoTypeDefs, resolvers as cardInfoResolvers } from './cardInfo';
 
 const typeDefs = mergeTypes([
     cardContractTypeDefs,
-    cardTypeDefs
+    cardInfoTypeDefs
   ]);
 
   const resolvers = mergeResolvers([
     cardContractResolvers,
-    cardResolvers
+    cardInfoResolvers
   ]);
 
 export { typeDefs, resolvers }
